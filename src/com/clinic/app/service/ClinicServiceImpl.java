@@ -17,13 +17,14 @@ public class ClinicServiceImpl implements IClinicService {
 	@Autowired
 	IClinicDao clinicDao;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public String authenticateUser(UserCredential user) {
 		try {
 			UserCredential userCredential = clinicDao.getUserCredentialByUsername(user.getUsername());
 		} 
 		catch (Exception e){
-			
+			LOG.error("Cannot fetch details for the user : {}", user.getUsername());
+			return null;
 		}
 		
 		return null;
